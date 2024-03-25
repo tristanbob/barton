@@ -1,8 +1,8 @@
 import oci
-from oci.exceptions import ServiceError
+from oci.exceptions import ServiceError, ConfigFileNotFound, InvalidConfig
 import sys
-import csv
 import os
+import csv
 
 
 # Static ANSI escape codes for colors
@@ -18,38 +18,35 @@ class Color:
     RESET = "\033[0m"
 
 
-def validate_oci_config():
+def validate_oci_config(oci_config_path=None):
     """
-    Validates the OCI configuration file.
+    Validates and loads the OCI configuration from a specified file.
+
+    Parameters:
+    - oci_config_path: Optional; custom path to the OCI configuration file.
+
+    Returns:
+    The loaded OCI configuration.
 
     Exits the script with an error message if the configuration is invalid or missing.
-    Returns the valid OCI configuration.
     """
+    if not oci_config_path:
+        # Default OCI config path
+        oci_config_path = os.path.expanduser("~/.oci/config")
+
     try:
-        oci_config = oci.config.from_file()
+        oci_config = oci.config.from_file(file_location=oci_config_path)
         oci.config.validate_config(oci_config)
-        # Add a confirmation message indicating successful validation
         print(f"{Color.GREEN}OCI configuration file is valid.{Color.RESET}")
         return oci_config
-    except oci.exceptions.ConfigFileNotFound:
-        print(f"{Color.RED}OCI configuration file not found.{Color.RESET}")
+    except ConfigFileNotFound:
         print(
-            f"{Color.YELLOW}To generate an OCI configuration file, follow these steps:{Color.RESET}"
-        )
-        print(
-            f"{Color.CYAN}1. Install the OCI CLI if you haven't already.{Color.RESET}"
-        )
-        print(
-            f"{Color.CYAN}2. Run 'oci setup config' to start the setup wizard.{Color.RESET}"
+            f"{Color.RED}OCI configuration file not found at '{oci_config_path}'.{Color.RESET}"
         )
         sys.exit(1)
-    except oci.exceptions.InvalidConfig:
-        print(f"{Color.RED}Invalid OCI configuration.{Color.RESET}")
+    except InvalidConfig:
         print(
-            "Please check your OCI configuration file for missing or incorrect entries."
-        )
-        print(
-            f"{Color.YELLOW}Common issues include missing user, fingerprint, tenancy, or region information.{Color.RESET}"
+            f"{Color.RED}Invalid OCI configuration at '{oci_config_path}'.{Color.RESET}"
         )
         sys.exit(1)
 
@@ -226,7 +223,7 @@ def confirm_changes(rule_count, nsg_name):
     Returns:
     True if the user confirms the action, False otherwise.
     """
-    prompt_message = f"{Color.CYAN}Do you want to add these {Color.RED}{rule_count}{Color.CYAN} rules to NSG {Color.YELLOW}{nsg_name}{Color.CYAN}? (y/N): {Color.RESET}"
+    prompt_message = f"{Color.CYAN}Do you want to add these {Color.WHITE}{rule_count}{Color.CYAN} rules to NSG {Color.YELLOW}{nsg_name}{Color.CYAN}? (y/N): {Color.RESET}"
     response = input(prompt_message)
     return response.lower() == "y"
 

@@ -1,3 +1,27 @@
+# Barton - Bulk Add Rules To OCI NSG
+#
+# Description: This script reads a CSV file with security rules and adds them to an NSG in Oracle Cloud Infrastructure.
+#
+# The script requires a YAML configuration file with the following parameters:
+# - nsg_ocid: The OCID of the NSG where the rules will be added.
+# - nsg_rules_file: The path to the CSV file with the security rules.
+# - batch_size: The number of rules to add in each batch (default is 25).
+# - oci_config_file: The path to the OCI configuration file (default is ~/.oci/config).
+#
+# The CSV file should have the following columns:
+# - direction: The direction of the rule (INGRESS or EGRESS).
+# - protocol: The protocol of the rule (tcp, udp, icmp, etc.).
+# - cidr: The CIDR block to allow traffic from/to.
+# - port_start: The start port of the rule.
+# - port_end: The end port of the rule.
+# - description: A description of the rule.
+#
+# Example CSV line:
+# ingress,tcp,10.0.0.0/16,80,80,"Allow HTTP traffic"
+#
+# Usage: python barton.py
+#
+
 import oci  # Import the Oracle Cloud Infrastructure SDK for Python
 import csv  # Import the CSV module to read CSV files
 import argparse  # Import the argparse module to parse command-line arguments
@@ -42,8 +66,11 @@ validate_rules_csv(rules_file_path)
 
 batch_size = config.get("batch_size", 25)
 
-# Validate OCI configuration
-oci_config = validate_oci_config()
+# Load the OCI configuration file path
+oci_config_file = config.get("oci_config_file")
+
+# Validate and load the OCI configuration
+oci_config = validate_oci_config(oci_config_path=oci_config_file)
 
 virtual_network_client = oci.core.VirtualNetworkClient(oci_config)
 

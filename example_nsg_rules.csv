@@ -1,0 +1,5 @@
+direction,protocol,cidr,port_start,port_end,description
+ingress,tcp,10.0.0.0/16,80,80,"Allow HTTP traffic"
+ingress,udp,10.0.0.0/16,53,53,"Allow DNS queries"
+ingress,icmp,0.0.0.0/0,,,"Allow ICMP (e.g., ping)"
+egress,all,0.0.0.0/0,,,"Allow all outbound traffic"

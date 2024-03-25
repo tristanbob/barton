@@ -1,0 +1,9 @@
+# The OCID of the Network Security Group where rules will be added (REQUIRED)
+nsg_ocid: ""
+
+# Default path to the CSV file containing the NSG rules (REQUIRED)
+nsg_rules_file: "example_nsg_rules.csv"
+
+# Batch size for adding security rules to the NSG. OCI supports up to 25 rules per batch.
+# Adjust this number if OCI changes its restrictions or if you experience performance issues.
+batch_size: 25

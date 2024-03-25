@@ -4,8 +4,7 @@ This project provides a Python script named `barton.py` for adding rules to Netw
 
 ## Features
 
-- Validate OCI configuration before proceeding.
-- Validate NSG rules CSV file format and contents.
+- Validate configuration and NSG rules CSV file
 - Display planned NSG rule additions with colored output for clarity.
 - Confirm with the user before applying changes to the NSG.
 - Add NSG rules in batches to accommodate API request limits.

@@ -63,6 +63,8 @@ The `config.yaml` file should include:
 
 ## Sample output
 
+![barton-example](https://github.com/tristanbob/barton/assets/8879811/3db992cb-d503-45d2-8c6d-3481b133cc93)
+
 ```
 > python .\barton.py
 Using NSG OCID: ocid1.networksecuritygroup.oc1.phx.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

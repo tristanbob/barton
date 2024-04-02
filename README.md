@@ -2,6 +2,8 @@
 
 This project provides a Python script named `barton.py` for adding rules to Network Security Groups (NSG) in Oracle Cloud Infrastructure (OCI). It enables users to add NSG rules in bulk from a CSV file, incorporating validations for both the OCI configuration and the rules file format.
 
+![BartonLogoHorizontal](https://github.com/tristanbob/barton/assets/8879811/b4988dd3-b238-4edd-857c-939aa8953218)
+
 ## Features
 
 - Validate configuration and NSG rules CSV file

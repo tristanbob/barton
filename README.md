@@ -39,8 +39,8 @@ This project provides a Python script named `barton.py` for adding rules to Netw
 
    ```
    direction,protocol,cidr,port_start,port_end,description
-   INGRESS,tcp,192.168.1.0/24,80,80,Allow HTTP traffic
-   EGRESS,udp,0.0.0.0/0,53,53,Allow DNS queries
+   ingress,tcp,192.168.1.0/24,80,80,Allow HTTP traffic
+   egress,udp,0.0.0.0/0,53,53,Allow DNS queries
    ```
 
 6. Edit the `config.yaml` file to include your NSG OCID and the path to your rules CSV file.
